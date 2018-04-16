@@ -42,6 +42,8 @@ nmap <leader>w :w!<cr>
 "sometimes forgot caplocks
 nmap <leader>W :w!<cr> 
 
+" mouse
+set mouse=a
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Editing mappings
@@ -142,7 +144,7 @@ set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ %<\ PWD:\ %r%{getcwd()}%h\ \ \ %=Ln:
 syntax enable 
 
 " Enable 256 colors palette in Gnome Terminal
-if $COLORTERM == 'gnome-terminal'
+if $COLORTERM == 'truecolor'
     set t_Co=256
 endif
 

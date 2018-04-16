@@ -1,0 +1,18 @@
+# C:\Users\<username>\AppData\Roaming\wsltty
+# Font Refer to https://github.com/IBM/plex
+
+BoldAsFont=-1
+BellType=0
+Font=IBM Plex Mono Text
+FontHeight=11
+ThemeFile=elementary.minttyrc
+Transparency=high
+OpaqueWhenFocused=yes
+AllowBlinking=yes
+Term=xterm-256color
+MiddleClickAction=void
+CursorType=block
+Language=*
+FontWeight=450
+Scrollbar=none
+

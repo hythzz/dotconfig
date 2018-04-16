@@ -1,0 +1,23 @@
+# C:\Users\<username>\AppData\Roaming\wsltty\themes
+# Refer to https://github.com/Mayccoll/Gogh/blob/master/themes/elementary.sh
+
+BackgroundColour=16,16,16
+ForegroundColour=242,242,242
+CursorColour=242,242,242
+Black=16,16,16
+BoldBlack=48,48,48
+Red=225,50,26
+BoldRed=255,54,30
+Green=106,176,23
+BoldGreen=123,201,31
+Yellow=255,192,5
+BoldYellow=255,208,10
+Blue=0,79,158
+BoldBlue=0,113,255
+Magenta=236,0,72
+BoldMagenta=255,29,98
+Cyan=42,167,231
+BoldCyan=75,184,253
+White=242,242,242
+BoldWhite=245,245,245
+
