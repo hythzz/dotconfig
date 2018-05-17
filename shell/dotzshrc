@@ -24,7 +24,6 @@ plugins=(
 	cp
 	colorize
 	colored-man-pages
-	ssh-agent
 	tmux
 	zsh-syntax-highlighting
 )
