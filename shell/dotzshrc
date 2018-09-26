@@ -1,7 +1,7 @@
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 unsetopt beep
-cd /home/`whoami`
+# cd /home/`whoami`
 
 # Path to your oh-my-zsh installation.
 export ZSH=/home/`whoami`/.oh-my-zsh
@@ -31,15 +31,15 @@ plugins=(
 source $ZSH/oh-my-zsh.sh
 
 # ssh alias for tmux
-ssh() {
-	if [[ "$(ps -p $(ps -p $$ -o ppid=) -o comm=)" == *"tmux"* ]]; then
-		tmux rename-window "$(echo $* | cut -d . -f 1)"
-		command ssh "$@"
-		tmux setw automatic-rename on > /dev/null
-	else
-		command ssh "$@"
-	fi
-}
+# ssh() {
+# 	if [[ "$(ps -p $(ps -p $$ -o ppid=) -o comm=)" == *"tmux"* ]]; then
+# 		tmux rename-window "$(echo $* | cut -d . -f 1)"
+# 		command ssh "$@"
+# 		tmux setw automatic-rename on > /dev/null
+# 	else
+# 		command ssh "$@"
+# 	fi
+# }
 
 # Alias reboot for avoiding stupid mistakes
 reboot()
@@ -79,6 +79,3 @@ LS_COLORS="ow=01;36;40" && export LS_COLORS
 zstyle ':completion:*' list-colors "${(@s.:.)LS_COLORS}"
 autoload -Uz compinit
 compinit
-
-# start tmux
-[[ -z $TMUX ]] && exec tmux
