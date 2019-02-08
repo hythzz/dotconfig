@@ -56,6 +56,10 @@ reboot()
 # Navigation Alias
 alias ll="ls -alh"
 alias la="ls -a"
+cd()
+{
+	builtin cd "$@" && ls;
+}
 alias cd..="cd .."
 alias cdd="cd ../../"
 alias cddd="cd ../../../"
