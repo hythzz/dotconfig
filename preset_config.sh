@@ -190,6 +190,8 @@ install_ctags() {
 install_aria2() {
 	echo "Installing aria2"
 	yes '' | sudo apt install -y aria2
+	mkdir -p ${HOME}/.config/aria2/
+	ln -f aria2/aria2.conf ${HOME}/.config/aria2/aria2.conf
 	echo -e "Done aria2 installation.\n"
 }
 
