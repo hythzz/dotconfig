@@ -54,6 +54,8 @@ set mouse=a
 " btw, press jk is like playing rhythm game :)
 inoremap jk <Esc>:w<CR>
 inoremap JK <Esc>:w<CR>
+inoremap kj <Esc>:w<CR>
+inoremap KJ <Esc>:w<CR>
 
 " Remap VIM 0 to first non-blank character
 map 0 ^

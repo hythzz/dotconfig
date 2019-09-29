@@ -15,8 +15,6 @@ redirect_output
 # Configurable region
 # ------------------------
 
-# install_vm_tools
-# config_share_folder
 install_and_config_git
 install_vim
 config_vim
@@ -26,9 +24,8 @@ install_zsh
 config_zsh
 install_ctags
 install_aria2
-# install_fcitx
-install_chrome
-# install_brackets
+install_fcitx
+# install_chrome
 install_theme
 config_theme
 
