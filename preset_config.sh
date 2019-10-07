@@ -156,7 +156,7 @@ install_zsh() {
 	yes '' | sudo apt install -y zsh
 	# install oh my zsh
 	# prevent changing zsh shell from login
-	sh -c "hash() { return -1; }; `yes 'n' | wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -`"
+	yes 'n' | sh -c "hash() { return -1; }; `wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -`"
 	echo -e "Done zsh installation.\n"
 }
 
