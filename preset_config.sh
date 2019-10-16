@@ -207,15 +207,6 @@ install_fcitx() {
 }
 
 # ------------------------------------------------------------
-# Google Chrome
-# ------------------------------------------------------------
-install_chrome() {
-	echo "Installing chromium"
-	yes '' | sudo apt install -y chromium-browser
-	echo -e "Done chromium installation.\n"
-}
-
-# ------------------------------------------------------------
 # Clean Up
 # ------------------------------------------------------------
 clean_up() {

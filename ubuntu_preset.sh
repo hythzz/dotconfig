@@ -25,7 +25,6 @@ config_zsh
 install_ctags
 install_aria2
 install_fcitx
-# install_chrome
 install_theme
 config_theme
 
