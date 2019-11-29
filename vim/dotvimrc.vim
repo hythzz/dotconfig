@@ -70,8 +70,10 @@ nnoremap K 15k
 nnoremap L 5l
 
 " taglist relavant
+if has("ctags")
 nnoremap <C-]> g<C-]>
 nnoremap <leader>t :Tlist<CR>
+endif
 
 " save and exit
 nnoremap qq :q<CR>
