@@ -124,15 +124,16 @@ config_vim() {
 # ------------------------------------------------------------
 install_tmux() {
 	echo "Installing tmux"
+	TMUX_VER=3.0a
 	yes '' | sudo apt install -y make autoconf pkg-config libevent-dev libncurses5-dev libncursesw5-dev gcc
-	wget -P $TMP https://github.com/tmux/tmux/releases/download/2.9a/tmux-2.9a.tar.gz
-	tar -xf $TMP/tmux-2.9a.tar.gz -C $TMP
-	cd $TMP/tmux-2.9a
+	wget -P $TMP https://github.com/tmux/tmux/releases/download/$TMUX_VER/tmux-$TMUX_VER.tar.gz
+	tar -xf $TMP/tmux-$TMUX_VER.tar.gz -C $TMP
+	cd $TMP/tmux-$TMUX_VER
 	./configure && make -j4
 	sudo make install
 	cd -
-	rm -rf $TMP/tmux-2.9a
-	rm -rf $TMP/tmux-2.9a.tar.gz
+	rm -rf $TMP/tmux-$TMUX_VER
+	rm -rf $TMP/tmux-$TMUX_VER.tar.gz
 	echo -e "Done tmux installation.\n"
 }
 
