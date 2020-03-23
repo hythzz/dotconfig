@@ -18,7 +18,7 @@ preinstall_check() {
 		export LOG_FILE="/tmp/system-preset.log"
 	fi
 
-	if [[ -z "$TMP_DIR" ]]
+	if [[ -z "$TMP" ]]
 	then
 		export TMP="/tmp"
 	fi
