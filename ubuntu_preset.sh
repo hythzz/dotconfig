@@ -2,7 +2,7 @@
 
 
 # ------------------------------------------------------------
-# This script is for Ubuntu 16.04
+# This script is for Ubuntu 20.04
 # ------------------------------------------------------------
 # load config file
 DIR=$(cd `dirname $0` && pwd)
@@ -27,6 +27,7 @@ install_aria2
 install_fcitx
 install_theme
 config_theme
+install_apps
 
 # ------------------------
 

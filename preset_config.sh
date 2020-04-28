@@ -6,20 +6,17 @@ DIR=$(cd `dirname $0` && pwd)
 # Pre installation check
 # ------------------------------------------------------------
 preinstall_check() {
-	if [[ `whoami` == "root" ]];
-	then
+	if [[ `whoami` == "root" ]]; then
 		echo "The Script shouldn't be run with root (need to install personal config)"
 		echo "Privilege Level will be requested later"
 		exit -1
 	fi
 	
-	if [[ -z "$LOG_FILE" ]]
-	then
+	if [[ -z "$LOG_FILE" ]]; then
 		export LOG_FILE="/tmp/system-preset.log"
 	fi
 
-	if [[ -z "$TMP" ]]
-	then
+	if [[ -z "$TMP" ]]; then
 		export TMP="/tmp"
 	fi
 	
@@ -62,12 +59,19 @@ install_and_config_git() {
 # ------------------------------------------------------------
 install_theme() {
 	echo "Installing theme (takes some time)"
-	# refer to https://github.com/nana-4/materia-theme
 	# and https://github.com/PapirusDevelopmentTeam/papirus-icon-theme
 	yes '' | sudo add-apt-repository ppa:papirus/papirus
 	yes '' | sudo add-apt-repository ppa:papirus/hardcode-tray
-	yes '' | sudo apt install -y papirus-icon-theme materia-gtk-theme hardcode-tray
+	yes '' | sudo apt install -y papirus-icon-theme hardcode-tray
 
+	# install materia-theme
+	# refer to https://github.com/nana-4/materia-theme
+	# install from source to get latest version, keep the repo
+	yes '' | sudo apt-get install -y gtk2-engines-murrine gnome-themes-standard sassc
+	git clone --depth 1 https://github.com/nana-4/materia-theme $HOME/materia-theme
+	sudo $HOME/materia-theme/install.sh
+
+	# if using xfce4 backup, theme installation is not necessary, already in config backup
 	# terminal color scheme
 	# refer to https://github.com/Mayccoll/Gogh 
 	# Disable because can be configured in config_theme()
@@ -95,9 +99,7 @@ install_theme() {
 # this config should be run at the end of installation
 config_theme() {
 	echo "Configuring theme"
-	cp -rf xfce4/xfce4 $HOME/.config/
-	cp -rf xfce4/Thunar $HOME/.config/
-	cp -rf xfce4/xubuntu $HOME/.config/
+	cp -rf config_backup/xfce4/ $HOME/.config/
 	echo "Done theme Configuration."
 	echo -e "Reboot to take effect.\n"
 
@@ -124,16 +126,7 @@ config_vim() {
 # ------------------------------------------------------------
 install_tmux() {
 	echo "Installing tmux"
-	TMUX_VER=3.0a
-	yes '' | sudo apt install -y make autoconf pkg-config libevent-dev libncurses5-dev libncursesw5-dev gcc
-	wget -P $TMP https://github.com/tmux/tmux/releases/download/$TMUX_VER/tmux-$TMUX_VER.tar.gz
-	tar -xf $TMP/tmux-$TMUX_VER.tar.gz -C $TMP
-	cd $TMP/tmux-$TMUX_VER
-	./configure && make -j4
-	sudo make install
-	cd -
-	rm -rf $TMP/tmux-$TMUX_VER
-	rm -rf $TMP/tmux-$TMUX_VER.tar.gz
+	sudo apt install -y tmux
 	echo -e "Done tmux installation.\n"
 }
 
@@ -192,7 +185,7 @@ install_aria2() {
 	echo "Installing aria2"
 	yes '' | sudo apt install -y aria2
 	mkdir -p ${HOME}/.config/aria2/
-	ln -f aria2/aria2.conf ${HOME}/.config/aria2/aria2.conf
+	ln -f config_backup/aria2/aria2.conf ${HOME}/.config/aria2/aria2.conf
 	echo -e "Done aria2 installation.\n"
 }
 
@@ -201,10 +194,73 @@ install_aria2() {
 # ------------------------------------------------------------
 install_fcitx() {
 	echo "Installing fcitx"
-	yes '' | sudo apt install -y fcitx fcitx-googlepinyin
+	yes '' | sudo apt install -y fcitx fcitx-module-cloudpinyin fcitx-googlepinyin fcitx-mozc
 	# add environment variable necessary to run
-	echo -e "GTK_IM_MODULE=fcitx\nQT_IM_MODULE=fcitx\nXMODIFIERS=\"@im=fcitx\"\n" | sudo tee -a /etc/environment
-	echo -e "Done fcitx installation. (optional: add fcitx to autostart)\n"
+	echo -e "GTK_IM_MODULE=fcitx\nQT_IM_MODULE=fcitx\nXMODIFIERS=\"@im=fcitx\"\n" | tee -a $HOME/.pam_environment
+	mkdir -p $HOME/.config/autostart
+	cp -rf config_backup/fcitx/fctix.desktop $HOME/.config/autostart/
+	mkdir -p $HOME/.config/fcitx
+	cp -rf config_backup/fcitx/config/ $HOME/.config/fcitx/
+	echo -e "Done fcitx installation.\n"
+}
+
+install_apps() {
+	# cannot switch fcitx input in snap package
+	# use snap package only if fcitx input is not required
+
+	echo "Assuming snapd is installed by default"
+	echo "Installing visual studio code"
+	sudo apt install -y curl
+	curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
+	sudo install -o root -g root -m 644 packages.microsoft.gpg /usr/share/keyrings/
+	sudo sh -c 'echo "deb [arch=amd64 signed-by=/usr/share/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list'
+	sudo apt install apt-transport-https
+	sudo apt update
+	sudo apt install code # or code-insiders
+
+	echo "Installing java"
+	sudo apt install -y openjdk-8-jdk
+
+	echo "Installing pip"
+	sudo apt install -y python3-pip
+
+	echo "Installing htop"
+	sudo apt install -y htop
+
+	echo "Installing gimp"
+	sudo apt install -y gimp
+
+	echo "Installing draw.io"
+	sudo snap install drawio
+
+	echo "Installing skype"
+	wget -P $TMP https://repo.skype.com/latest/skypeforlinux-64.deb
+	sudo apt install -y $TMP/skypeforlinux-64.deb
+	rm -rf $TMP/skypeforlinux-64.deb
+
+	echo "Installing slack"
+	wget -P $TMP https://downloads.slack-edge.com/linux_releases/slack-desktop-4.4.2-amd64.deb
+	sudo apt install -y $TMP/slack-desktop-4.4.2-amd64.deb
+	rm -rf $TMP/slack-desktop-4.4.2-amd64.deb
+
+	echo "Installing spotify"
+	sudo snap install spotify
+
+	echo "Installing vlc"
+	sudo apt install -y vlc
+
+	echo "Installing deadbeef"
+	wget -P $TMP https://newcontinuum.dl.sourceforge.net/project/deadbeef/travis/linux/1.8.3/deadbeef-static_1.8.3-1_amd64.deb
+	sudo apt install -y $TMP/deadbeef-static_1.8.3-1_amd64.deb
+	rm -rf $TMP/deadbeef-static_1.8.3-1_amd64.deb
+
+	echo "Installing tigervnc"
+	sudo apt install -y tigervnc-viewer
+
+	echo "Installing teamviewer"
+	wget -P $TMP https://download.teamviewer.com/download/linux/teamviewer_amd64.deb
+	sudo apt install -y $TMP/teamviewer_amd64.deb
+	rm -rf $TMP/teamviewer_amd64.deb
 }
 
 # ------------------------------------------------------------
