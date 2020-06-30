@@ -46,7 +46,7 @@ del_workspace_tail() {
 # so wait a bit and then activate window
 # $1 is window id
 activate_window() {
-	sleep 0.01
+	sleep 0.1
 	xdotool windowactivate $1
 }
 
