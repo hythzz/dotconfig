@@ -75,9 +75,9 @@ install_theme() {
 	# terminal color scheme
 	# refer to https://github.com/Mayccoll/Gogh 
 	# Disable because can be configured in config_theme()
-	# echo "Installing gnome terminal color scheme"
-	# dconf write /org/gnome/terminal/legacy/profiles:/default "''"  # in case dir nonexist
-	# wget -O xt  http://git.io/v3D8R && chmod +x xt && ./xt && rm xt
+	echo "Installing gnome terminal color scheme"
+	dconf write /org/gnome/terminal/legacy/profiles:/default "''"  # in case dir nonexist
+	wget -O xt  http://git.io/v3D8R && chmod +x xt && ./xt && rm xt
 	
 	# IBM Plex Font
 	echo "Installing IBM Plex Font"
@@ -194,9 +194,10 @@ install_aria2() {
 # ------------------------------------------------------------
 install_fcitx() {
 	echo "Installing fcitx"
-	yes '' | sudo apt install -y fcitx fcitx-module-cloudpinyin fcitx-googlepinyin fcitx-mozc
+	yes '' | sudo add-apt-repository ppa:ikuya-fruitsbasket/fcitx5
+	yes '' | sudo apt install -y fcitx5 fcitx5-pinyin fcitx5-mozc fcitx5-material-color fcitx5-module-cloudpinyin
 	# add environment variable necessary to run
-	echo -e "GTK_IM_MODULE=fcitx\nQT_IM_MODULE=fcitx\nXMODIFIERS=\"@im=fcitx\"\n" | tee -a $HOME/.pam_environment
+	echo -e "GTK_IM_MODULE=fcitx\nQT_IM_MODULE=fcitx\nXMODIFIERS=\"@im=fcitx\"\nSDL_IM_MODULE=fcitx\n" | tee -a $HOME/.pam_environment
 	mkdir -p $HOME/.config/autostart
 	cp -rf config_backup/fcitx/fctix.desktop $HOME/.config/autostart/
 	mkdir -p $HOME/.config/fcitx
@@ -248,11 +249,6 @@ install_apps() {
 
 	echo "Installing vlc"
 	sudo apt install -y vlc
-
-	echo "Installing deadbeef"
-	wget -P $TMP https://newcontinuum.dl.sourceforge.net/project/deadbeef/travis/linux/1.8.3/deadbeef-static_1.8.3-1_amd64.deb
-	sudo apt install -y $TMP/deadbeef-static_1.8.3-1_amd64.deb
-	rm -rf $TMP/deadbeef-static_1.8.3-1_amd64.deb
 
 	echo "Installing tigervnc"
 	sudo apt install -y tigervnc-viewer

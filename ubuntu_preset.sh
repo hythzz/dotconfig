@@ -26,7 +26,7 @@ install_ctags
 install_aria2
 install_fcitx
 install_theme
-config_theme
+# config_theme
 install_apps
 
 # ------------------------
