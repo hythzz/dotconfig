@@ -1,0 +1,28 @@
+! https://www.youtube.com
+! remove all video on home page
+www.youtube.com##ytd-two-column-browse-results-renderer:matches-attr("page-subtype"="home")
+! remove watch next at right side of the player
+www.youtube.com##ytd-item-section-renderer.ytd-watch-next-secondary-results-renderer.style-scope
+www.youtube.com###scroll-container > .yt-chip-cloud-renderer.style-scope
+! remove recommendation and shorts on search
+www.youtube.com##ytd-horizontal-card-list-renderer.ytd-item-section-renderer.style-scope
+www.youtube.com##ytd-reel-shelf-renderer.ytd-item-section-renderer.style-scope:nth-of-type(1)
+www.youtube.com##ytd-reel-shelf-renderer.ytd-item-section-renderer.style-scope:nth-of-type(2)
+! left guide column, remove home, shorts button and lower two section
+www.youtube.com##ytd-guide-section-renderer.ytd-guide-renderer.style-scope:nth-of-type(3)
+www.youtube.com##ytd-guide-section-renderer.ytd-guide-renderer.style-scope:nth-of-type(4)
+www.youtube.com##ytd-guide-entry-renderer > #endpoint:matches-attr("title"="Shorts")
+www.youtube.com##ytd-guide-entry-renderer > #endpoint:matches-attr("title"="Home")
+
+! https://www.bilibili.com
+www.bilibili.com##.bili-feed4-layout
+www.bilibili.com##.bili-header__channel
+www.bilibili.com##.header-channel-fixed
+www.bilibili.com##.recommend-list-v1
+www.bilibili.com##.part-undefined.pop-live-small-mode
+
+! https://www.twitch.tv
+www.twitch.tv##.front-page-carousel.hTjsXl.Layout-sc-1xcs6mc-0
+www.twitch.tv##.cwJXDZ.Layout-sc-1xcs6mc-0 > div
+||static.twitchcdn.net/assets/An-AmazonCompanyWhite-8035483ebaf4be9b99e1.png$image
+
